@@ -9,13 +9,12 @@ public class StartUp : MonoBehaviour
     void Start()
     {
         string path = Application.persistentDataPath;
-        Debug.LogWarning("Path: " + path);
-
+        Debug.Log("Path: " + path);
+        Debug.Log(Application.persistentDataPath);
         // Create folder if not exist
-        if (!System.IO.Directory.Exists(path + "/SaveData"))
+        if (!System.IO.Directory.Exists(path + "\\SaveData"))
         {
-            System.IO.Directory.CreateDirectory(path + "/SaveData");
-            Debug.LogWarning("Test");
+            System.IO.Directory.CreateDirectory(path + "\\SaveData");
         }
 
         ReadSaveData readSaveData = GetComponent<ReadSaveData>();

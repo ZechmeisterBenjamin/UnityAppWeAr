@@ -9,11 +9,14 @@ public class ReadSaveData : MonoBehaviour
     // Method to read files in the folder
     public void Read()
     {
-        // Read all files in the folder Application.persistentDataPath + "/SaveData"
-        string path = Application.persistentDataPath + "/SaveData";
-        
+        string path = Application.persistentDataPath + "\\SaveData";
         List<string> dir = Directory.GetDirectories(path).ToList();
         foreach (var f in dir)
-        { Debug.Log(f); }
+        { Debug.Log(PathToProjectName(f)); }
+    }
+    private string PathToProjectName(string path)
+    {
+        string[] parts = path.Split('\\');
+        return parts[parts.Length - 1];
     }
 }
