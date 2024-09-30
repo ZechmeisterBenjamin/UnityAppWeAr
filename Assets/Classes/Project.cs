@@ -1,5 +1,5 @@
 using Microsoft.Unity.VisualStudio.Editor;
-using PdfSharp.Pdf;
+// using PdfSharp.Pdf;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +15,7 @@ public class Chapter
     public List<Image> Images { get; set; }
     public List<Object> Objects { get; set; }
     public List<Animation> Animations { get; set; }
-    public List<PdfDocument> PDFs { get; set; }
+   //  public List<PdfDocument> PDFs { get; set; }
 }
 
 
