@@ -18,7 +18,15 @@ public class StartUp : MonoBehaviour
             Debug.LogWarning("Test");
         }
 
+        ReadSaveData readSaveData = GetComponent<ReadSaveData>();
 
-
+        if (readSaveData != null)
+        {
+            readSaveData.Read();  // Call a method from ReadSaveData if needed
+        }
+        else
+        {
+            Debug.LogWarning("ReadSaveData script is not attached to this GameObject.");
+        }
     }
 }
