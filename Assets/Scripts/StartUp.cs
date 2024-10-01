@@ -8,6 +8,7 @@ public class StartUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("StartUp Start");
         string path = Application.persistentDataPath;
         Debug.Log("Path: " + path);
         Debug.Log(Application.persistentDataPath);
@@ -15,17 +16,6 @@ public class StartUp : MonoBehaviour
         if (!System.IO.Directory.Exists(path + "\\SaveData"))
         {
             System.IO.Directory.CreateDirectory(path + "\\SaveData");
-        }
-
-        ReadSaveData readSaveData = GetComponent<ReadSaveData>();
-
-        if (readSaveData != null)
-        {
-            readSaveData.Read();  // Call a method from ReadSaveData if needed
-        }
-        else
-        {
-            Debug.LogWarning("ReadSaveData script is not attached to this GameObject.");
         }
     }
 }
