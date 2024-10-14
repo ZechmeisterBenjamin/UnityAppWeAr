@@ -13,6 +13,7 @@ public class ShowProject : MonoBehaviour
 
     void Start()
     {
+      
         if (button == null || dropdown == null)
         {
             Debug.LogError("Button oder Dropdown ist nicht zugewiesen!");
@@ -34,6 +35,7 @@ public class ShowProject : MonoBehaviour
 
     void TaskOnClick()
     {
+        Debug.Log("ShowProject Start");
         TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
         if (buttonText != null)
         {

@@ -39,49 +39,47 @@ public class LoadProjects : MonoBehaviour
     {
         foreach (var project in projects)
         {
-            if (inputField.text == "" && project.Contains(inputField.text))
+            if (project.Name.Contains(inputField.text))
             {
-                
-            
-            GameObject newButton = Instantiate(buttonPrefab, content);
-            TextMeshProUGUI buttonText = newButton.GetComponentInChildren<TextMeshProUGUI>();
-            if (buttonText != null)
-            {
-                // Set font size to match black buttons
-                buttonText.fontSize = 20;
-                buttonText.enableAutoSizing = false; // Ensure that text does not auto-scale
-                buttonText.alignment = TextAlignmentOptions.Left; // Adjust alignment to match the look
+                GameObject newButton = Instantiate(buttonPrefab, content);
+                TextMeshProUGUI buttonText = newButton.GetComponentInChildren<TextMeshProUGUI>();
+                if (buttonText != null)
+                {
+                    // Set font size to match black buttons
+                    buttonText.fontSize = 20;
+                    buttonText.enableAutoSizing = false; // Ensure that text does not auto-scale
+                    buttonText.alignment = TextAlignmentOptions.Left; // Adjust alignment to match the look
 
-                buttonText.text = project.Name;
-            }
-            else
-            {
-                Debug.LogError("No TextMeshProUGUI component found on button prefab!");
-            }
+                    buttonText.text = project.Name;
+                }
+                else
+                {
+                    Debug.LogError("No TextMeshProUGUI component found on button prefab!");
+                }
 
-            // Add the BlockDrag component to prevent dragging
-            BlockDrag blockDrag = newButton.AddComponent<BlockDrag>();
+                // Add the BlockDrag component to prevent dragging
+                BlockDrag blockDrag = newButton.AddComponent<BlockDrag>();
             }
         }
     }
-}
 
-// This script blocks dragging of the buttons
-public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
-{
-    public void OnBeginDrag(PointerEventData eventData)
+    // This script blocks dragging of the buttons
+    public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        // Prevent dragging
-        eventData.pointerDrag = null;
-    }
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            // Prevent dragging
+            eventData.pointerDrag = null;
+        }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        // Do nothing
-    }
+        public void OnDrag(PointerEventData eventData)
+        {
+            // Do nothing
+        }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        // Do nothing
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            // Do nothing
+        }
     }
 }
