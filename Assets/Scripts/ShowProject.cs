@@ -9,6 +9,7 @@ public class ShowProject : MonoBehaviour
     public object obj;
     public Button button;
     public TMP_Dropdown dropdown;
+    public GameObject GameObject;
     private string projectName = "";
 
     void Start()
