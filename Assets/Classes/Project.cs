@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Project : MonoBehaviour
 {
+    public string Name { get; set; }
     public List<Chapter> Chapters { get; set; }
 }
 public class Chapter

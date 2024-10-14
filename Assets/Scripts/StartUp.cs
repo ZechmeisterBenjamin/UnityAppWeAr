@@ -8,10 +8,7 @@ public class StartUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("StartUp Start");
         string path = Application.persistentDataPath;
-        Debug.Log("Path: " + path);
-        Debug.Log(Application.persistentDataPath);
         // Create folder if not exist
         if (!System.IO.Directory.Exists(path + "\\SaveData"))
         {

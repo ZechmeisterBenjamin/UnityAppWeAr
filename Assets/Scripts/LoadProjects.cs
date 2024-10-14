@@ -35,7 +35,7 @@ public class LoadProjects : MonoBehaviour
     }
 
     // Callback method to handle loading the projects into buttons
-    private void OnProjectsLoaded(List<string> projects)
+    private void OnProjectsLoaded(List<Project> projects)
     {
         foreach (var project in projects)
         {
@@ -44,8 +44,6 @@ public class LoadProjects : MonoBehaviour
                 
             
             GameObject newButton = Instantiate(buttonPrefab, content);
-
-            // Set button text
             TextMeshProUGUI buttonText = newButton.GetComponentInChildren<TextMeshProUGUI>();
             if (buttonText != null)
             {
@@ -54,7 +52,7 @@ public class LoadProjects : MonoBehaviour
                 buttonText.enableAutoSizing = false; // Ensure that text does not auto-scale
                 buttonText.alignment = TextAlignmentOptions.Left; // Adjust alignment to match the look
 
-                buttonText.text = project;
+                buttonText.text = project.Name;
             }
             else
             {
