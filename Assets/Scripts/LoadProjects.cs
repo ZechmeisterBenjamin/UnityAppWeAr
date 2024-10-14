@@ -136,4 +136,3 @@ public class LoadProjects : MonoBehaviour
             // Do nothing
         }
     }
-}

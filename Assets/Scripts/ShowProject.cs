@@ -13,7 +13,7 @@ public class ShowProject : MonoBehaviour
 
     void Start()
     {
-      
+
         if (button == null || dropdown == null)
         {
             Debug.LogError("Button oder Dropdown ist nicht zugewiesen!");
@@ -41,6 +41,15 @@ public class ShowProject : MonoBehaviour
         {
             projectName = buttonText.text;
             Debug.Log($"Projektname gesetzt auf: {projectName}");
+            ReadSaveData readSaveData = GetComponent<ReadSaveData>();
+            if (readSaveData != null)
+            {
+                StartCoroutine(readSaveData.Read(OnProjectsLoaded));
+            }
+            else
+            {
+                Debug.LogError("ReadSaveData component not found on this GameObject.");
+            }
         }
         else
         {
@@ -50,6 +59,7 @@ public class ShowProject : MonoBehaviour
 
     private void OnProjectsLoaded(List<Project> projects)
     {
+        Debug.Log($"Dropdown reference: {dropdown.name}");
         if (projects == null || projects.Count == 0)
         {
             Debug.LogWarning("Keine Projekte geladen.");
@@ -62,7 +72,7 @@ public class ShowProject : MonoBehaviour
         foreach (var project in projects)
         {
             Debug.Log($"Projekt gefunden: {project.Name}"); // Debugging für Projekte
-
+            Debug.Log(projectName);
             if (project.Name == projectName)
             {
                 foreach (var chapter in project.Chapters)
@@ -84,8 +94,9 @@ public class ShowProject : MonoBehaviour
         {
             options.Add(new TMP_Dropdown.OptionData(chapter.Name));
         }
-
-        dropdown.ClearOptions(); // Leere die aktuellen Optionen
-        dropdown.AddOptions(options); // Füge neue Optionen hinzu
+        dropdown.ClearOptions();
+        dropdown.value = 0;
+        dropdown.options = options;
+        dropdown.RefreshShownValue();
     }
 }
