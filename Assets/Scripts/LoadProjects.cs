@@ -3,14 +3,21 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting;
 
 public class LoadProjects : MonoBehaviour
 {
     public GameObject buttonPrefab;
     public Transform content;
+    public TMP_InputField inputField;
 
     void Start()
     {
+        while (content.childCount != 0)
+        {
+            Destroy(content.GetChild(0));
+        }
+
         Debug.Log("LoadProjects Start");
 
         // Get the ReadSaveData component
@@ -32,6 +39,10 @@ public class LoadProjects : MonoBehaviour
     {
         foreach (var project in projects)
         {
+            if (inputField.text == "" && project.Contains(inputField.text))
+            {
+                
+            
             GameObject newButton = Instantiate(buttonPrefab, content);
 
             // Set button text
@@ -52,6 +63,7 @@ public class LoadProjects : MonoBehaviour
 
             // Add the BlockDrag component to prevent dragging
             BlockDrag blockDrag = newButton.AddComponent<BlockDrag>();
+            }
         }
     }
 }
