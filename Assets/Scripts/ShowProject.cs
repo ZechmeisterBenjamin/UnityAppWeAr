@@ -9,7 +9,7 @@ public class ShowProject : MonoBehaviour
     public object obj;
     public Button button;
     public TMP_Dropdown dropdown;
-    public GameObject GameObject;
+    public TMP_Text text;
     private string projectName = "";
 
     void Start()
@@ -41,7 +41,7 @@ public class ShowProject : MonoBehaviour
         if (buttonText != null)
         {
             projectName = buttonText.text;
-            Debug.Log($"Projektname gesetzt auf: {projectName}");
+            text.text = projectName;
             ReadSaveData readSaveData = GetComponent<ReadSaveData>();
             if (readSaveData != null)
             {

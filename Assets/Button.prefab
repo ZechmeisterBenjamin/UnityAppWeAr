@@ -271,6 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 8859993416465607651}
   dropdown: {fileID: 1611765415805995077, guid: 788b5685e8089974789030226e3ee317, type: 3}
+  text: {fileID: 8171880821763954338, guid: 979a9de13af6a5444926ecce0dd931fb, type: 3}
 --- !u!114 &6376089721318599194
 MonoBehaviour:
   m_ObjectHideFlags: 0
