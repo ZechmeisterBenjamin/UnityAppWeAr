@@ -14,6 +14,7 @@ public class ShowProject : MonoBehaviour
 
     void Start()
     {
+       
 
         if (button == null || dropdown == null)
         {

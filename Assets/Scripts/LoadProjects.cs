@@ -8,9 +8,11 @@ public class LoadProjects : MonoBehaviour
 {
     public GameObject buttonPrefab;
     public Transform content;
+    public TMP_Dropdown dropdown;
     public TMP_InputField inputField;
     private List<GameObject> buttonPool = new List<GameObject>(); // Pool of buttons
     private List<Project> allProjects = new List<Project>();
+    
 
     private Coroutine filterCoroutine;
     private float debounceTime = 0.1f; // Time in seconds to wait before filtering
