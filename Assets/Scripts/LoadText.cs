@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 public class LoadText : MonoBehaviour
 {
@@ -14,24 +16,26 @@ public class LoadText : MonoBehaviour
     public TMP_Text title;
     public TMP_Text text;
 
-    void Start()
+    private IEnumerator Start()
     {
-        dropdown.onValueChanged.AddListener(delegate { LoadTextValue(); });
-        LoadTextValue();
+        dropdown.onValueChanged.AddListener(delegate { LoadTextValue(dropdown.value); });
+        yield return new WaitForSeconds(0.1f);
+        dropdown.value = -1;
+        Debug.Log("Set value to 1");
+        yield return new WaitForSeconds(0.1f);
+        dropdown.value = 0;
+        Debug.Log("Set value to 0");
     }
 
-    public void LoadTextValue()
+    public void LoadTextValue(int dropdownIndex)
     {
-        string path = Path.Combine(Application.persistentDataPath, "SaveData", title.text, "Chapters", dropdown.options[dropdown.value].text);
+        string path = Path.Combine(UnityEngine.Application.persistentDataPath, "SaveData", title.text, "Chapters", dropdown.options[dropdownIndex].text);
         Debug.Log("File path: " + path);
 
-        // Combine the path with the file name
         string filePath = Path.Combine(path, "data.txt");
 
-        // Check if the file exists
         if (File.Exists(filePath))
         {
-            // Read the contents of the file
             string fileContents = File.ReadAllText(filePath);
             text.text = fileContents;
         }
@@ -43,6 +47,6 @@ public class LoadText : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 }

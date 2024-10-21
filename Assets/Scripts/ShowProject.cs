@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using static System.Net.Mime.MediaTypeNames;
 public class ShowProject : MonoBehaviour
 {
     public object obj;
@@ -14,7 +15,7 @@ public class ShowProject : MonoBehaviour
 
     void Start()
     {
-       
+
 
         if (button == null || dropdown == null)
         {
@@ -58,7 +59,6 @@ public class ShowProject : MonoBehaviour
             Debug.LogError("Kein TextMeshProUGUI-Komponente im Button gefunden!");
         }
     }
-
     private void OnProjectsLoaded(List<Project> projects)
     {
         Debug.Log($"Dropdown reference: {dropdown.name}");
