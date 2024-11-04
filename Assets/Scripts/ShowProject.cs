@@ -97,8 +97,8 @@ public class ShowProject : MonoBehaviour
             options.Add(new TMP_Dropdown.OptionData(chapter.Name));
         }
         dropdown.ClearOptions();
-        dropdown.value = 0;
         dropdown.options = options;
+        dropdown.value = 0;
         dropdown.RefreshShownValue();
     }
 }
