@@ -15,16 +15,11 @@ public class LoadText : MonoBehaviour
     public TMP_Dropdown dropdown;
     public TMP_Text title;
     public TMP_Text text;
+    public Button button;
 
-    private IEnumerator Start()
+    private void Start()
     {
         dropdown.onValueChanged.AddListener(delegate { LoadTextValue(dropdown.value); });
-        yield return new WaitForSeconds(0.1f);
-        dropdown.value = -1;
-        Debug.Log("Set value to 1");
-        yield return new WaitForSeconds(0.1f);
-        dropdown.value = 0;
-        Debug.Log("Set value to 0");
     }
 
     public void LoadTextValue(int dropdownIndex)
@@ -43,6 +38,11 @@ public class LoadText : MonoBehaviour
         {
             Debug.LogError("File not found at: " + filePath);
         }
+    }
+    public void SetDropDownValue()
+    {
+        Debug.Log("SetDropDownValue");
+        dropdown.value = 0;
     }
 
     void Update()
