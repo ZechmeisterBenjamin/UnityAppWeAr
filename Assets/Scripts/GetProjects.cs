@@ -4,15 +4,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using static System.Net.Mime.MediaTypeNames;
 
 [Serializable]
 public class FetchedProject
 {
-    public string projectname; // Match JSON keys
+    public string projectname;
     public string description;
-    public string last_changed; // Change to string to avoid DateTime issues
+    public string last_changed;
     public string path_for_zipfile;
+}
+
+[Serializable]
+public class FetchedProjectResponse
+{
+    public int count;
+    public string next;
+    public string previous;
+    public FetchedProject[] results;
 }
 
 public class ProjectFetcher : MonoBehaviour
@@ -31,8 +39,26 @@ public class ProjectFetcher : MonoBehaviour
                 string jsonResponse = request.downloadHandler.text;
                 Debug.Log(jsonResponse);
 
-                FetchedProject[] projects = JsonHelper.FromJson<FetchedProject>(jsonResponse);
-                callback(projects);
+                // Deserialize the JSON response
+                FetchedProjectResponse response = JsonUtility.FromJson<FetchedProjectResponse>(jsonResponse);
+                if (response != null && response.results != null)
+                {
+                    foreach (var project in response.results)
+                    {
+                        Debug.Log($"Project Name: {project.projectname}");
+                        Debug.Log($"Description: {project.description}");
+                        Debug.Log($"Last Changed: {project.last_changed}");
+                        Debug.Log($"Path for Zipfile: {project.path_for_zipfile}");
+                        Debug.Log("");
+                    }
+
+                    callback(response.results);
+                }
+                else
+                {
+                    Debug.LogError("Failed to parse JSON response.");
+                    callback(null);
+                }
             }
             else
             {
@@ -59,28 +85,5 @@ public class ProjectFetcher : MonoBehaviour
                 Debug.LogError("Failed to download file: " + request.error);
             }
         }
-    }
-}
-
-
-[Serializable]
-public class FetchedProjectArray
-{
-    public FetchedProject[] projects;
-}
-
-public static class JsonHelper
-{
-    public static T[] FromJson<T>(string json)
-    {
-        string newJson = "{ \"array\": " + json + "}";
-        Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(newJson);
-        return wrapper.array;
-    }
-
-    [Serializable]
-    private class Wrapper<T>
-    {
-        public T[] array;
     }
 }
