@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Globalization;
+using System.Collections;
 
 public class LoadImportEntries : MonoBehaviour
 {
@@ -76,10 +77,9 @@ public class LoadImportEntries : MonoBehaviour
             string savePath = Path.Combine(Application.persistentDataPath + @"\SaveData", project.projectname + ".zip");
             downloadButton.onClick.AddListener(() =>
             {
-                Debug.Log($"Downloading: {project.projectname}");
-                StartCoroutine(ProjectFetcher.DownloadZipFile(project.path_for_zipfile, savePath));
+                Debug.Log("Downloading " + projectNameText.text);
+                StartCoroutine(Download(project, savePath));
             });
-
             // Set the position of the prefab in the content area
             RectTransform entryRect = projectEntry.GetComponent<RectTransform>();
             float yPos = -i * (prefabHeight + spacing);
@@ -87,7 +87,13 @@ public class LoadImportEntries : MonoBehaviour
         }
     }
 
-
+    IEnumerator Download(FetchedProject project, string savePath)
+    {
+        Debug.Log("Wallah download");
+        yield return StartCoroutine(ProjectFetcher.DownloadZipFile(project.path_for_zipfile, savePath));
+        System.IO.Compression.ZipFile.ExtractToDirectory(savePath, savePath.Substring(0, savePath.Length - 4));
+        File.Delete(savePath);
+    }
     public string FormatDate(string dateTimeString)
     {
         // Parse the input string to a DateTime object
