@@ -99,6 +99,5 @@ public class ShowProject : MonoBehaviour
         dropdown.ClearOptions();
         dropdown.options = options;
         dropdown.value = 0;
-        dropdown.RefreshShownValue();
     }
 }
