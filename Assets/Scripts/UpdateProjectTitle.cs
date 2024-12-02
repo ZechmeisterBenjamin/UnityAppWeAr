@@ -15,6 +15,6 @@ public class UpdateProjectTitle : MonoBehaviour
     void Update()
     {
         var text = GetComponent<TMP_Text>();
-        text.text = TMP_Text.text;
+        text.text = TMP_Text.text == "New Text" ? string.Empty : TMP_Text.text;
     }
 }

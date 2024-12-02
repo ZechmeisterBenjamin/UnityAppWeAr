@@ -522,13 +522,7 @@ MonoBehaviour:
   m_ItemImage: {fileID: 0}
   m_Value: -1
   m_Options:
-    m_Options:
-    - m_Text: Test1
-      m_Image: {fileID: 0}
-    - m_Text: Test2
-      m_Image: {fileID: 0}
-    - m_Text: Test3
-      m_Image: {fileID: 0}
+    m_Options: []
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
