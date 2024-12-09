@@ -32,7 +32,8 @@ public class LoadText : MonoBehaviour
         if (File.Exists(filePath))
         {
             string fileContents = File.ReadAllText(filePath);
-            text.text = fileContents;
+            List<string> categoryTexts = SplitTextIntoCategories(fileContents);
+            text.text = categoryTexts[0];
         }
         else
         {
@@ -43,6 +44,39 @@ public class LoadText : MonoBehaviour
     {
         Debug.Log("SetDropDownValue");
         dropdown.value = 0;
+    }
+    private List<string> SplitTextIntoCategories(string str)
+    {
+        List<string> strings = new List<string>();
+        int i = 0;
+
+        while (true)
+        {
+            try
+            {
+                string startTag = $"[$%{{{i}}}%$]";
+                string endTag = $"]$%{{{i}}}%$[";
+                int startIndex = str.IndexOf(startTag);
+                int endIndex = str.IndexOf(endTag);
+
+                if (startIndex == -1 || endIndex == -1)
+                {
+                    Debug.LogError(startTag);
+                    break;
+                }
+
+                strings.Add(str.Substring(startIndex + startTag.Length, endIndex - endTag.Length));
+
+                i++;
+            }
+            catch
+            {
+                Debug.LogError(str);
+                break;
+            }
+        }
+
+        return strings;
     }
 
     void Update()
