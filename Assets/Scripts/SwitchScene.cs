@@ -2,9 +2,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class SceneSwitcher : MonoBehaviour
 {
-    // Scene asset to switch to
     public Object scene;
 
     // Button to attach the listener to
@@ -28,11 +28,25 @@ public class SceneSwitcher : MonoBehaviour
         if (scene != null)
         {
             string sceneName = scene.name;
-            SceneManager.LoadScene(sceneName);
+            StartCoroutine(LoadSceneAsync(sceneName));
         }
         else
         {
             Debug.LogError("Scene is not set.");
         }
     }
+
+
+    private System.Collections.IEnumerator LoadSceneAsync(string sceneName)
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        Debug.Log("Finished loading: " + sceneName);
+    }
+
 }
