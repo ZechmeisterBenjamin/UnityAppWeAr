@@ -25,10 +25,18 @@ public class FetchedProjectResponse
 
 public class ProjectFetcher : MonoBehaviour
 {
+    private static string configFilePath = Path.Combine(Application.persistentDataPath, "SaveData", "config.cfg");
+
     public static IEnumerator GetProjects(Action<FetchedProject[]> callback)
     {
-        string uri = "https://api.htlwy.at/gaw/projects/";
-        string passcode = "V-ck4E6gSxQ8G>LAawF=+r#PnYRNsv";
+        (string uri, string passcode) = ReadConfigFile();
+        if (string.IsNullOrEmpty(uri) || string.IsNullOrEmpty(passcode))
+        {
+            Debug.LogError("URI or passcode not found in config file.");
+            callback(null);
+            yield break;
+        }
+
         using (var request = UnityWebRequest.Get(uri))
         {
             request.SetRequestHeader("X-Passcode", passcode);
@@ -85,5 +93,41 @@ public class ProjectFetcher : MonoBehaviour
                 Debug.LogError("Failed to download file: " + request.error);
             }
         }
+    }
+
+    private static (string, string) ReadConfigFile()
+    {
+        string uri = null;
+        string passcode = null;
+
+        Debug.Log($"Reading config file from path: {configFilePath}");
+
+        if (File.Exists(configFilePath))
+        {
+            string[] lines = File.ReadAllLines(configFilePath);
+            foreach (string line in lines)
+            {
+                Debug.Log($"Config line: {line}");
+                if (line.Contains("api-link"))
+                {
+                    uri = line.Substring("api-link = ".Length).Trim().Trim('"');
+                    Debug.Log($"Found URI: {uri}");
+                }
+                else if (line.Contains("api-passcode"))
+                {
+                    passcode = line.Substring("api-passcode = ".Length).Trim().Trim('"');
+                    Debug.Log($"Found passcode: {passcode}");
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError($"Config file not found at {configFilePath}");
+        }
+
+        Debug.Log($"Final URI: {uri}");
+        Debug.Log($"Final Passcode: {passcode}");
+
+        return (uri, passcode);
     }
 }
