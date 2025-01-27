@@ -183,6 +183,8 @@ public class LoadImportEntries : MonoBehaviour
             downloadButton.onClick.AddListener(() =>
             {
                 Debug.Log("Downloading " + projectNameText.text);
+                if(File.Exists(savePath))
+                    File.Delete(savePath);
                 StartCoroutine(Download(project, savePath));
             });
 

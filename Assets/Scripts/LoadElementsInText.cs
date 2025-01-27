@@ -3,7 +3,6 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityMeshImporter;
 
 public class TextWithDynamicImage : MonoBehaviour
 {
@@ -141,77 +140,9 @@ public class TextWithDynamicImage : MonoBehaviour
             }
         }
 
-        foreach (System.Text.RegularExpressions.Match match in objMatches)
-        {
-            string objName = match.Groups[1].Value;
-            string objPath = Path.Combine(imagesDirectory, "..", "Models", objName + ".obj");
-            objPath = Path.GetFullPath(objPath); // Resolve the full path
-
-            Debug.Log($"Looking for obj file at path: {objPath}");
-
-            if (File.Exists(objPath))
-            {
-                // Load the obj file and create a 3D model
-                GameObject objModel = LoadObjFromFile(objPath);
-                if (objModel != null)
-                {
-                    // Set the parent of the new 3D model to the content object
-                    objModel.transform.SetParent(content.transform, false);
-
-                    // Set the position of the 3D model
-                    objModel.transform.localPosition = Vector3.zero;
-
-                    // Add line breaks before and after the placeholder to prevent overlap
-                    inputText = inputText.Replace(match.Value, "\n\n");
-
-                    // Ensure the 3D model appears in the correct order
-                    objModel.transform.SetSiblingIndex(content.transform.childCount - 1);
-                }
-                else
-                {
-                    Debug.LogError($"Failed to load obj file at path: {objPath}");
-                    inputText = inputText.Replace(match.Value, "[Model Unavailable]");
-                }
-            }
-            else
-            {
-                Debug.LogError($"Obj file not found at path: {objPath}");
-                inputText = inputText.Replace(match.Value, "[Model Not Found]");
-            }
-        }
 
         return inputText;
     }
-
-
-
-    GameObject LoadObjFromFile(string objPath)
-    {
-        Debug.Log($"Attempting to load obj file from path: {objPath}");
-
-        if (!File.Exists(objPath))
-        {
-            Debug.LogError($"File does not exist: {objPath}");
-            return null;
-        }
-
-        // Load the obj file
-        string objData = File.ReadAllText(objPath);
-        GameObject objModel = MeshImporter.Load(objData);
-
-        if (objModel != null)
-        {
-            Debug.Log($"Successfully loaded obj file from path: {objPath}");
-            return objModel;
-        }
-        else
-        {
-            Debug.LogError($"Failed to load obj file from path: {objPath}");
-            return null;
-        }
-    }
-
-
 
     Vector2 GetTextPosition(TMP_Text textComponent, int charIndex)
     {
