@@ -7,7 +7,6 @@ public class SceneSwitcher : MonoBehaviour
 {
     public Object scene;
 
-    // Button to attach the listener to
     public Button switchButton;
 
     private void Start()
@@ -22,7 +21,6 @@ public class SceneSwitcher : MonoBehaviour
         }
     }
 
-    // Method to be called when the button is clicked
     public void SwitchScene()
     {
         if (scene != null)

@@ -20,7 +20,6 @@ public class TextWithDynamicImage : MonoBehaviour
 
         if (string.IsNullOrEmpty(imagesDirectory))
         {
-            Debug.LogError("Images directory not found.");
             return;
         }
 
@@ -36,7 +35,6 @@ public class TextWithDynamicImage : MonoBehaviour
 
         if (string.IsNullOrEmpty(imagesDirectory))
         {
-            Debug.LogError("Images directory not found.");
             return;
         }
 
@@ -251,6 +249,10 @@ public class TextWithDynamicImage : MonoBehaviour
     string GetImagesDirectory(string directoryName)
     {
         string basePath = Path.Combine(Application.persistentDataPath, "SaveData");
+        try
+        {
+
+       
         string[] directories = Directory.GetDirectories(basePath, directoryName, SearchOption.AllDirectories);
 
         foreach (string dir in directories)
@@ -263,5 +265,10 @@ public class TextWithDynamicImage : MonoBehaviour
         }
 
         return null;
+        }
+        catch
+        {
+            return null;
+        }
     }
 }

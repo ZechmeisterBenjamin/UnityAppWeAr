@@ -40,8 +40,7 @@ public class LoadText : MonoBehaviour
         if (File.Exists(filePath))
         {
             string fileContents = File.ReadAllText(filePath);
-            List<string> categoryTexts = SplitTextIntoCategories(fileContents);
-            text.text = categoryTexts[int.Parse(category.text)-1];
+            text.text = fileContents;
         }
         else
         {
@@ -53,46 +52,7 @@ public class LoadText : MonoBehaviour
         Debug.Log("SetDropDownValue");
         dropdown.value = 0;
     }
-    private List<string> SplitTextIntoCategories(string str)
-    {
-        List<string> strings = new List<string>();
-        int i = 0;
-        while (true)
-        {
-            string startTag = $"[$%{{{i}}}%$]";
-            string endTag = $"]$%{{{i}}}%$[";
-
-            int startIndex = str.IndexOf(startTag);
-            int endIndex = str.IndexOf(endTag);
-
-            if (startIndex == -1 || endIndex == -1 || endIndex <= startIndex)
-            {
-                if (startIndex != -1) Debug.LogError($"Missing end tag {endTag} in string: " + str);
-                if (endIndex != -1) Debug.LogError($"Missing start tag {startTag} in string: " + str);
-                if (endIndex <= startIndex) Debug.LogError($"End tag {endTag} found before start tag {startTag} in string: " + str);
-                break;
-            }
-
-            int substringStart = startIndex + startTag.Length;
-            int substringLength = endIndex - substringStart;
-
-            if (substringLength < 0)
-            {
-                Debug.LogError($"invalid tag found: start at index {startIndex} and end at {endIndex}. Full string: " + str);
-                break;
-            }
-
-            string extractedString = str.Substring(substringStart, substringLength);
-            strings.Add(extractedString);
-            Debug.Log($"Extracted string: {extractedString}");
-
-            str = str.Substring(endIndex + endTag.Length);
-
-            i++;
-        }
-
-        return strings;
-    }
+   
 
     void Update()
     {
