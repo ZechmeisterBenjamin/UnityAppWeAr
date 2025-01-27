@@ -29,6 +29,8 @@ public class OptionsButton : MonoBehaviour
         }
         else
         {
+            File.WriteAllText(configFilePath, "api-link = \"\"\napi-passcode = \"\"");
+            Application.OpenURL("file://" + configFilePath);
             Debug.LogError("Config file not found at path: " + configFilePath);
         }
     }
